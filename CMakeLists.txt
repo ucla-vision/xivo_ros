@@ -89,11 +89,10 @@ endforeach()
 add_executable(mynode
   src/simple_node.cpp
   src/main.cpp
-  $ENV{XIVO_ROOT}/src/factory.cpp
 )
 list(APPEND deps
-  xest
   xapp
+  xest
   opencv_highgui
   opencv_features2d
   opencv_core
