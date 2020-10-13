@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 project(xivo)
 
+if(NOT DEFINED ENV{XIVO_ROOT})
+  message(FATAL_ERROR "Environment variable XIVO_ROOT is not set.")
+endif()
+
 add_compile_options(-std=c++17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
