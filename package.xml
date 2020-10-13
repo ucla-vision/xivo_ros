@@ -1,10 +1,11 @@
 <package>
-  <name>xivo</name>
+  <name>xivo_ros</name>
   <version>0.0.1</version>
   <description> 
     Xiaohan's Inertial-aided Visual Odometry
   </description>
   <maintainer email="hzhsfxh@gmail.com">Xiaohan Fei</maintainer>
+  <maintainer email="stephanietsuei@gmail.com">Stephanie Tsuei</maintainer>
   <license>TBD</license>
 
   <url>feixh.github.io</url>

@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
-project(xivo)
+project(xivo_ros)
+
+add_compile_options(-std=c++17)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
@@ -40,7 +42,6 @@ catkin_package(CATKIN_DEPENDS
   std_msgs
   message_runtime
   image_transport
-  dynamic_reconfigure
   sensor_msgs
   tf
   cv_bridge
@@ -53,32 +54,61 @@ catkin_package(CATKIN_DEPENDS
 )
 
 include_directories(
-  ${CMAKE_SOURCE_DIR}/common
-  ${CMAKE_SOURCE_DIR}/src
-  ${PROJECT_SOURCE_DIR}
-  ${PROJECT_SOURCE_DIR}/msg/cpp/
+  $ENV{XIVO_ROOT}/common
+  $ENV{XIVO_ROOT}/src
+  $ENV{XIVO_ROOT}/thirdparty/eigen-3.3.7/include/eigen3
+  $ENV{XIVO_ROOT}/thirdparty/jsoncpp/include
+  $ENV{XIVO_ROOT}/thirdparty/Pangolin/include
+  ${PROJECT_SOURCE_DIR}/include
+  ${CATKIN_DEVEL_PREFIX}/include
   ${catkin_INCLUDE_DIRS}
 )
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+foreach(dir ${dirs})
+  message(STATUS "dir='${dir}'")
+endforeach()
+
+find_package(OpenCV REQUIRED)
 
 link_directories(
-  ${CMAKE_SOURCE_DIR}/lib
-  /opt/ros/kinetic/lib/x86_64-linux-gnu
+  $ENV{XIVO_ROOT}/lib
+  $ENV{XIVO_ROOT}/thirdparty/gflags/lib
+  $ENV{XIVO_ROOT}/thirdparty/glog/lib
+  $ENV{XIVO_ROOT}/thirdparty/jsoncpp/lib
+  $ENV{XIVO_ROOT}/thirdparty/Pangolin/lib
+  /opt/ros/$ENV{ROS_DISTRO}/lib/x86_64-linux-gnu
+  /usr/lib/x86_64-linux-gnu
 )
 
+
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY LINK_DIRECTORIES)
+foreach(dir ${dirs})
+  message(STATUS "dir='${dir}'")
+endforeach()
 set(libxivo xest xapp)
-if (BUILD_G2O)
-  list(APPEND libxivo xopt)
-endif(BUILD_G2O)
+#if (BUILD_G2O)
+#  list(APPEND libxivo xopt)
+#endif(BUILD_G2O)
 
 
-add_executable(mynode main.cpp simple_node.cpp simple_node.h ../src/factory.cpp)
+add_executable(mynode
+  src/simple_node.cpp
+  src/main.cpp
+  $ENV{XIVO_ROOT}/src/factory.cpp
+)
 target_link_libraries(mynode
   ${libxivo}
-  gflags::gflags
+  common
+  gflags
   glog
   jsoncpp
   opencv_core
   opencv_imgcodecs
   opencv_highgui
+  opencv_xfeatures2d
+  pangolin
+  GL
+  GLEW
   ${catkin_LIBRARIES}
-  ${roscpp_LIBRARIES})
+  ${roscpp_LIBRARIES}
+  stdc++fs)

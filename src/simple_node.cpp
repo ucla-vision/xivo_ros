@@ -3,14 +3,17 @@
 #include "glog/logging.h"
 #include "opencv2/highgui/highgui.hpp"
 
-#include "xivo/FeatureData.h"
-#include "xivo/FeatureMap.h"
-#include "xivo/FullState.h"
-#include "xivo/MotionState2dNav.h"
+#include "xivo_ros/FeatureData.h"
+#include "xivo_ros/FeatureMap.h"
+#include "xivo_ros/FullState.h"
+#include "xivo_ros/MotionState2dNav.h"
 
 #include "utils.h"
 
-namespace xivo
+
+using namespace xivo;
+
+namespace xivo_ros
 {
 
 ros::Time xivoTimestamp_to_rosTime(timestamp_t ts) {
@@ -355,19 +358,19 @@ SimpleNode::SimpleNode(): adapter_{nullptr}, viewer_{nullptr}, viz_{false}
     est_proc_->SetPosePublisher(ego_motion_adapter_.get());
   }
   if (publish_map_) {
-    map_pub_ = nh_.advertise<xivo::FeatureMap>("xivo/map", 1000);
+    map_pub_ = nh_.advertise<xivo_ros::FeatureMap>("xivo/map", 1000);
     map_adapter_ = std::unique_ptr<ROSMapPublisherAdapter>(
       new ROSMapPublisherAdapter(map_pub_));
     est_proc_->SetMapPublisher(map_adapter_.get(), max_features_to_publish);
   }
   if (publish_full_state_) {
-    full_state_pub_ = nh_.advertise<xivo::FullState>("xivo/fullstate", 1000);
+    full_state_pub_ = nh_.advertise<xivo_ros::FullState>("xivo/fullstate", 1000);
     full_state_adapter_ = std::unique_ptr<ROSFullStatePublisherAdapter>(
       new ROSFullStatePublisherAdapter(full_state_pub_));
     est_proc_->SetFullStatePublisher(full_state_adapter_.get());
   }
   if (publish_2dnav_state_) {
-    twod_nav_pub_ = nh_.advertise<xivo::MotionState2dNav>("xivo/twod_nav", 1000);
+    twod_nav_pub_ = nh_.advertise<xivo_ros::MotionState2dNav>("xivo/twod_nav", 1000);
     twod_nav_adapter_ = std::unique_ptr<ROS2dNavPublisherAdapter>(
       new ROS2dNavPublisherAdapter(twod_nav_pub_));
     est_proc_->Set2dNavStatePublisher(twod_nav_adapter_.get());

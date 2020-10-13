@@ -4,12 +4,14 @@
 
 #include "Eigen/Core"
 #include "core.h"
-#include "ros_setup.h"
+#include "xivo_ros/ros_setup.h"
 
 #include "estimator_process.h"
 #include "publisher.h"
 
-namespace xivo
+using namespace xivo;
+
+namespace xivo_ros
 {
 
 // Size of the small buffer used for sorting messages based on timestamps.
