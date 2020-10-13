@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(xivo_ros)
+project(xivo)
 
 add_compile_options(-std=c++17)
 
@@ -72,12 +72,15 @@ link_directories(
   $ENV{XIVO_ROOT}/thirdparty/glog/lib
   $ENV{XIVO_ROOT}/thirdparty/jsoncpp/lib
   $ENV{XIVO_ROOT}/thirdparty/Pangolin/lib
-  /opt/ros/$ENV{ROS_DISTRO}/lib/x86_64-linux-gnu
-  /usr/lib/x86_64-linux-gnu
+  #/opt/ros/$ENV{ROS_DISTRO}/lib/x86_64-linux-gnu
+  #/usr/lib/x86_64-linux-gnu
 )
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY LINK_DIRECTORIES)
+foreach(dir ${dirs})
+  message(STATUS "dir='${dir}'")
+endforeach()
 
-
-set(libxivo xest xapp)
+#set(libxivo xest xapp)
 #if (BUILD_G2O)
 #  list(APPEND libxivo xopt)
 #endif(BUILD_G2O)
@@ -88,19 +91,41 @@ add_executable(mynode
   src/main.cpp
   $ENV{XIVO_ROOT}/src/factory.cpp
 )
-target_link_libraries(mynode
-  ${libxivo}
-  common
-  gflags
-  glog
-  jsoncpp
-  opencv_core
-  opencv_imgcodecs
+list(APPEND deps
+  xest
+  xapp
   opencv_highgui
+  opencv_features2d
+  opencv_core
+  opencv_video
+  opencv_imgproc
+  opencv_imgcodecs
   opencv_xfeatures2d
+  glog
   pangolin
+  pthread
+  jsoncpp
   GL
   GLEW
+  common
+  gflags
   ${catkin_LIBRARIES}
   ${roscpp_LIBRARIES}
-  stdc++fs)
+)
+target_link_libraries(mynode ${deps} "-Wl,-lstdc++fs") 
+#target_link_libraries(mynode
+#  ${libxivo}
+#  common
+#  gflags
+#  glog
+#  jsoncpp
+#  opencv_core
+#  opencv_imgcodecs
+#  opencv_highgui
+#  opencv_xfeatures2d
+#  pangolin
+#  GL
+#  GLEW
+#  ${catkin_LIBRARIES}
+#  ${roscpp_LIBRARIES}
+#  stdc++fs)

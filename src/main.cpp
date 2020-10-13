@@ -3,9 +3,8 @@
 #include "gflags/gflags.h"
 #include "glog/logging.h"
 // xivo
-#include "xivo_ros/simple_node.h"
+#include "xivo/simple_node.h"
 
-using namespace xivo;
 
 int main(int argc, char ** argv)
 {
@@ -14,7 +13,7 @@ int main(int argc, char ** argv)
 
   ros::init(argc, argv, "xivo");
 
-  xivo_ros::SimpleNode node;
+  xivo::SimpleNode node;
 
   while(ros::ok()) {
     // node.HandleQueue();

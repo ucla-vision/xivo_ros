@@ -1,5 +1,5 @@
 <package>
-  <name>xivo_ros</name>
+  <name>xivo</name>
   <version>0.0.1</version>
   <description> 
     Xiaohan's Inertial-aided Visual Odometry
