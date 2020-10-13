@@ -82,6 +82,7 @@ add_executable(xivo_ros
   src/simple_node.cpp
   src/main.cpp
 )
+add_dependencies(xivo_ros ${${PROJECT_NAME}_EXPORTED_TARGETS})
 list(APPEND deps
   xapp
   xest
