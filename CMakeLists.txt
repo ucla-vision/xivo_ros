@@ -63,10 +63,6 @@ include_directories(
   ${CATKIN_DEVEL_PREFIX}/include
   ${catkin_INCLUDE_DIRS}
 )
-get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-foreach(dir ${dirs})
-  message(STATUS "dir='${dir}'")
-endforeach()
 
 find_package(OpenCV REQUIRED)
 
@@ -81,10 +77,6 @@ link_directories(
 )
 
 
-get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY LINK_DIRECTORIES)
-foreach(dir ${dirs})
-  message(STATUS "dir='${dir}'")
-endforeach()
 set(libxivo xest xapp)
 #if (BUILD_G2O)
 #  list(APPEND libxivo xopt)
