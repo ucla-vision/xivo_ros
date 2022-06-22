@@ -161,7 +161,7 @@ void ROSFullStatePublisherAdapter::Publish(const timestamp_t &ts,
   copy_rot_to_ros(msg.gbc.rotation, X.Rbc);
   copy_vec3_to_ros(msg.bg, X.bg);
   copy_vec3_to_ros(msg.ba, X.ba);
-  copy_rot_to_ros(msg.qg, X.Rg);
+  copy_rot_to_ros(msg.qg, X.Rsg);
 
   msg.td = X.td;
 
