@@ -28,7 +28,3 @@ float64[]                  camera_covariance
 uint32                     MotionStateSize
 uint32                     group
 geometry_msgs/Transform    gsc
-bool                       MeasurementUpdateInitialized
-geometry_msgs/Vector3      inn_Tsb
-geometry_msgs/Vector3      inn_Wsb
-geometry_msgs/Vector3      inn_Vsb
